@@ -1,5 +1,6 @@
 .section .data
 fmt_int: .string "%d "
+fmt_last_int: .string "%d"
 fmt_new_line: .string "\n"
 
 .section .text
@@ -107,9 +108,10 @@ push_to_stack:
 
 init_print:
     li s5, 0
+    addi s3, s3, -1
 
 print_loop:
-    bge s5, s3, finish_exec
+    bge s5, s3, print_last
 
     slli t0, s5, 2
     add t0, s1, t0
@@ -120,6 +122,17 @@ print_loop:
 
     addi s5, s5, 1
     beq zero, zero, print_loop
+
+print_last:
+    slli t0, s5, 2
+    add t0, s1, t0
+    lw a1, 0(t0)    # Loading result into a1
+
+    la a0, fmt_last_int
+    jal ra, printf
+
+    addi s5, s5, 1
+    addi s3, s3, 1
 
 finish_exec:
     la a0, fmt_new_line
