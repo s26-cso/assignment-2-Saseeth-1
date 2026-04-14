@@ -21,6 +21,7 @@ opening_file:
     la a1, mode         # a1 = "r"
     jal ra, fopen
     add s0, a0, zero    # allocating space on stack for file's pointer
+    beq s0, zero, just_finish
 
 accessing_last_character:
 
@@ -95,6 +96,19 @@ is_not_palin:
 finish_exec:
     add a0, s0, zero
     jal ra, fclose      # Closing the file
+
+    ld s4, 0(sp)
+    ld s3, 8(sp)
+    ld s2, 16(sp)
+    ld s1, 24(sp)
+    ld s0, 32(sp)
+    ld ra, 40(sp)
+    addi sp, sp, 48
+
+    li a0, 0
+    ret
+
+just_finish:
 
     ld s4, 0(sp)
     ld s3, 8(sp)
