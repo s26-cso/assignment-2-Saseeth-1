@@ -1,8 +1,8 @@
 .section .data
 filename: .string "input.txt"
 mode: .string "r"
-is_palindrome: .string "Yes"
-is_not_palindrome: .string "No"
+is_palindrome: .string "Yes\n"
+is_not_palindrome: .string "No\n"
 
 .section .text
 .globl main
@@ -85,12 +85,12 @@ comparison_loop:
 
 is_palin:
     la a0, is_palindrome
-    jal ra, puts
+    jal ra, printf
     beq zero, zero, finish_exec
 
 is_not_palin:
     la a0, is_not_palindrome
-    jal ra, puts
+    jal ra, printf
     beq zero, zero, finish_exec
 
 finish_exec:
